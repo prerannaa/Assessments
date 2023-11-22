@@ -1,0 +1,49 @@
+body{
+    background-color: rgb(209, 209, 209);
+    box-sizing: border-box;
+}
+
+.box{
+    background-color: white;
+    height: 350px; 
+    width: 325px; 
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+    padding: 25px;
+    margin-top: 30px;
+    margin-left: 60px;
+}
+
+pre{
+    color: gray;
+    font-size: 18px;
+}
+
+.icons{
+    color: rgb(10, 99, 29);
+}
+
+#leaf{
+    background-color: rgb(235, 234, 234);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+#map{
+    background-color: rgb(235, 234, 234);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+#cursor{
+    background-color: rgb(235, 234, 234);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.building{
+    padding-top: 15px;
+    color: gray;
+    font-family: "Poppins", sans-serif;
+}
+
