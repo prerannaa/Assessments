@@ -1,0 +1,25 @@
+.btn {
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  //   default button is medium sized
+  padding: 16px 32px;
+  //   small sized button
+  &.small {
+    padding: 12px 24px;
+    line-height: 20px;
+  }
+  &.big {
+    padding: 24px 32px;
+    font-size: 18px;
+  }
+
+  &.outlined {
+    background-color: transparent;
+    color: $white;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+  }
+}

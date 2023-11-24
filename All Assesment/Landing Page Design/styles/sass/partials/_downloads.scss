@@ -1,0 +1,9 @@
+.download{
+    color: $grey;
+    &__info__title{
+        color: $black;
+        font-size: $card-title-font-size;
+        font-weight: 600;
+        font-family: $font-family;
+    }
+}

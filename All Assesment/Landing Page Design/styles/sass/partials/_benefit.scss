@@ -1,0 +1,37 @@
+.benefits{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 39px;
+
+    &__title{
+        font-size: $card-title-font-size;
+        font-weight: 600;
+    }
+
+    &__box{
+        @media screen and (min-width: $medium) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        @media screen and (min-width: $large) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        &__container{
+            width: 304px;
+            height: 331px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0px 24px 32px $shadowColor;
+            margin: 20px;
+            padding: 24px 16px;
+            justify-content: center;
+        }
+
+
+    }
+
+}

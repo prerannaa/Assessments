@@ -1,0 +1,32 @@
+.header {
+  // background-color: $primary-color;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  &__logo {
+    margin: 0px
+  }
+  &__nav {
+    display: none;
+    list-style-type: none;
+    gap: 32px;
+  }
+  &__nav__hamburger{
+    display: flex;
+    width: 100%;
+  }
+  
+}
+
+.first{
+  //background-color: $primary-color;
+  &__main{
+    color: $white;
+  }
+}
+
+
+

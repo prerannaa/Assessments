@@ -1,0 +1,35 @@
+.container {
+  padding: 24px 24px;
+  @media screen and (min-width: $medium ) {
+    padding: 0 36px;
+    .header__nav {
+      color: $white;
+      display: flex;
+      list-style-type: none;
+      gap: 32px;
+    }
+    .header__nav__hamburger{
+      display: none;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    padding: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    .header__nav {
+      color: $white;
+      display: flex;
+      list-style-type: none;
+      gap: 32px;
+    }
+    .header__nav__hamburger{
+      display: none;
+    }
+  }
+}
+
+//background classes
+.bg-primary{
+  background-color: $primary-color;
+  color: $white;
+}

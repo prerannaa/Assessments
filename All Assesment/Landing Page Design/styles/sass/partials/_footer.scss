@@ -1,0 +1,53 @@
+.footer{
+    text-align: left;
+    background-color: #EFEEFF;
+    &__title{
+        flex-wrap: nowrap;
+        font-size: $card-title-font-size;
+        color: $black;
+        font-weight: 600;
+    }
+    &__form{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        input{
+            background-color: transparent;
+            border: none;
+        }
+        &__line{
+            width: 330px;
+            height: 1px;
+            background: rgba(29, 28, 49, 0.20);
+        }
+        button{
+            background-color: $primary-color;
+            color: $white;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    &__box{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 90px;
+        &--title{
+            font-size: $card-title-font-size;
+            font-weight: 600;
+        }
+    }
+    &__info{
+        ul{
+            padding: 0;
+        }
+    }
+
+    &__icons{
+        display: flex;
+        gap: 16px;
+    } 
+
+}
+
