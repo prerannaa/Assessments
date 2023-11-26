@@ -1,0 +1,30 @@
+.container {
+  margin: 0px 35px;
+  .header__button{
+    display: none;
+  }
+  @media screen and (min-width: $medium) {
+    padding: 0 70px;
+    .header__button{
+      display: none;
+    }
+  }
+  @media screen and (min-width: $large) {
+    margin: 0 70px;
+    //max-width: 1400px;
+    gap: 130px;
+    .header__nav{
+      display: flex;
+      color: $grey;
+      list-style-type: none;
+      gap: 25px;
+    }
+    .header__nav__hamburger{
+      display: none;
+    }
+    .header__button{
+      display: flex;
+      width: auto;
+    }
+  }
+}

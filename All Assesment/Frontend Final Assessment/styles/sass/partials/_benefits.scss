@@ -1,0 +1,72 @@
+.benefit{
+    padding-top: 50px;
+    &__header{
+        color: $grey;
+        @media screen and (min-width: $large) {
+            display: flex;
+            gap: 255px;
+        }
+    }
+
+    &__list{
+        margin: 30px 0px;
+        @media screen and (min-width: $large) {
+            display: flex;
+            justify-content: space-between;
+        }
+        &__select{
+            border-radius: 20px 80px 20px 20px;
+            background-color: rgba(196, 196, 196, 0.20);
+            max-width: 276px;
+            padding: 32px 20px;
+        }
+        &__icon{
+            max-width: 70px;
+            border-radius: 29.938px;
+            background: rgba(196, 196, 196, 0.10);
+            padding: 15px;
+        }
+        &__title{
+            color: $blue;
+            font-weight: $heading-font-weight;
+        }
+        &__info{
+            color: $grey;
+        }
+        &__more, &__unselect-more{
+            display: flex;
+            color: $blue;
+        }
+
+        &__unselect-more{
+            color: $grey;
+        }
+
+        &__unselect{
+            padding: 40px;
+            border-radius: 49.896px;
+            border: 2.994px solid rgba(255, 255, 255, 0.50);
+            color: $primary-color;
+        }
+    }
+}
+
+.header__title{
+    color: $primary-color;
+    font-size: $heading-font-size;
+    line-height: 1;
+}
+
+.benefit__list__select,
+.benefit__list__unselected {
+  margin-bottom: 30px;
+}
+
+.benefit__list__unselected{
+    gap: 37px;
+    @media screen and (min-width: $medium) {
+        display: flex;
+        padding-right: 37px;
+        padding-bottom: 30px;
+    }
+}

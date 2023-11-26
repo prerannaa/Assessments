@@ -1,0 +1,163 @@
+  
+.main-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: $primary-color; 
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-header{
+  text-align: center;
+  font-size: $heading-font-size;
+  &__section{
+    color: $blue;
+  }
+  &__title{
+    color: $black;
+    font-size: 24px;
+    font-size: $heading-font-size;
+    font-weight: 800;
+  }
+  &__info{
+    font-size:$base-font-size;
+    color:rgba(0, 0, 0, 0.50);
+  }
+}
+
+.feedback-section {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  gap: 30px; 
+  padding-bottom: 100px;
+  
+  .feedback-box {
+    width: 100%;
+    max-width: 300px; 
+    background-color: rgba(196, 196, 196, 0.50);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: center;
+    padding: 30px;
+    border-radius: 13.55px;
+    
+    img {
+      padding-right: 20px;
+      border-radius: 20px; 
+      margin-bottom: 40px;
+    }
+    &__header{
+      display: flex;
+      justify-content: left;
+      align-items: left;
+      text-align: center;
+    }
+    
+    .feedback-box__header__title {
+      margin-bottom: 10px;
+      .feedback-box__header__title__name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .feedback-box__header__title__address {
+        color: #888; 
+      }
+    }
+    
+    p {
+      color: white; 
+    }
+  }
+
+  @media screen and (min-width: $large) {
+    flex-direction: row; 
+    justify-content: flex-start; 
+  }
+}
+
+
+.feedback-box {
+  width: 400px;
+  height: auto;
+  background-color: rgba(196, 196, 196, 0.50); /* Semi-transparent grey */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  p {
+    color: white; 
+  }
+}
+
+.rectangle-container {
+  position: absolute;
+  bottom: 0;
+  left: 60%;
+  transform: translateX(-50%);
+  max-width: 500px; /* Set a maximum width if desired */
+  width: 100%; /* Adjust the width as needed */
+  margin-bottom: 90px;
+  
+}
+
+.rectangle-two {
+  background-color: #17c2ec;
+  width: 50%;
+  padding: 23px;
+  margin-top: 70px;
+}
+
+.input-section {
+  width: 80%;
+  input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+}
+
+.heading-section{
+  color: $primary-color;
+  text-align: center;
+  &__title{
+    font-size: $heading-font-size;
+  }
+}
+
+.footer-section {
+  background-color: navy; 
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  color: white;
+  gap: 10px;
+  h2 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+  .social-icons {
+    display: flex;
+    gap: 10px;
+    img {
+      max-width: 30px;
+      height: auto;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+  

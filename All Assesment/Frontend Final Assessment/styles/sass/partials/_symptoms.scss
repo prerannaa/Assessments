@@ -1,0 +1,81 @@
+
+.symptoms {
+    color: $primary-color;
+    padding-top: 25px;
+  
+    &__info {
+      justify-content: center;
+      justify-items: center;
+      text-align: center;
+      padding: 0px 10px;
+  
+      &__title {
+        color: $blue;
+        font-size: $heading-font-size;
+        font-weight: $heading-font-weight;
+      }
+  
+      &__text {
+        color: $grey;
+        font-weight: normal;
+      }
+    }
+  
+    &__list-image {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+  
+      img {
+        max-width: 222.919px;
+        width: 100%;
+        height: auto;
+  
+        @media screen and (max-width: $medium) {
+          max-width: 458.419px;
+          width: 100%;
+        }
+  
+        @media screen and (min-width: $large) {
+          max-width: 708.419px;
+          width: 100%;
+        }
+      }
+    }
+  
+    .symptoms__symptom-box {
+      border-radius: 10px;
+      background: rgba(196, 196, 196, 0.20);
+      margin-bottom: 56px; // Adjust spacing between symptom boxes
+      padding: 23px 60px; // Adjust padding as needed
+      color: $blue;
+      font-size: 18px; // Adjust font size as needed
+      margin-top: 10px; // Adjust vertical positioning
+  
+      p {
+        margin: 0;
+      }
+    }
+  
+    .symptoms_list {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+      //margin-top: 20px; 
+  
+      .symptoms__left,
+      .symptoms__right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+  
+      .symptoms__right {
+        align-items: flex-end;
+      }
+    }
+  }
+  
+  

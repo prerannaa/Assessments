@@ -1,0 +1,95 @@
+.registration{
+
+    color: $black;
+    font-weight: $title-font-weight;
+    padding:40px 0px;
+    &__title{
+        text-align: center;
+        font-size: $heading-font-size;
+        font-weight: $title-font-weight;
+        @media screen and (min-width: $large) {
+            text-align: left;
+        }
+    }
+    &__image-container{
+        border-radius: 15.212px;
+        background: #0B153C;
+        max-width: 290px; 
+
+
+    }
+    &__image__title{
+        text-align: center;
+        margin-top: 36px;
+        color: $primary-color;
+        font-size: $heading-font-size;
+
+    }
+
+    &__info--submit{
+        margin-top: 60px;
+        margin-bottom: 20px;
+    }
+
+    &__info--check{
+        display: flex;
+        //margin-top: 20px;
+        &__status{
+            color: $blue;
+            padding-left: 20px;
+        }
+        
+    }
+    &__info--title{
+        font-size: $base-font-size;
+        font-weight: 700;
+    }
+
+}
+
+.number--input{
+    
+    @media screen and (min-width: $large){
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.number--input--text, .name--input--text {
+    background-color: rgba(11, 21, 60, 0.15);
+    border: none;
+    border-radius: 20px;
+    width: 100%;
+    padding: 17px;
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.number-notification{
+    color: rgba(0, 0, 0, 0.50);
+}
+
+.number--verify{
+    max-width: 150px;
+    width: 150px;
+    height: fit-content;
+}
+
+// .registration--container{
+//     margin:39px 0px;
+// }
+@media screen and (min-width: $large) {
+    .registration--container {
+        display: flex;
+        justify-content: space-between;
+        .registration__image-container{
+            order: 2;
+        }
+    .registration__title{
+        justify-content: flex-start;
+    }
+    }
+  
+
+  }

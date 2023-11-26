@@ -1,0 +1,45 @@
+.header {
+  //background-color: navy;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 53px;
+  &__logo {
+    margin: 0px;
+    padding: 0px;
+  }
+  &__nav {
+    display: none;
+    padding: 0px 35px;
+    &__hamburger{
+      padding: auto;
+      display: flex;
+      justify-self: right;
+    }
+    }
+  }
+
+  .vaccine__company__footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+    img {
+      max-width: 1440px;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @media screen and (min-width: $large) {
+    .vaccine__company__footer {
+      //padding: 0 20px; /* Adjusted padding for larger screens */
+      background: rgba(76, 75, 75, 0.5); /* Background color */
+    }
+  }
+
+
+  
+  
