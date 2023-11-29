@@ -1,0 +1,78 @@
+body {
+  height: 100vh;
+  place-items: center;
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-container {
+  /* width: 100%; */
+  max-width: 550px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  text-align: center; 
+  margin: 0 auto; 
+}
+
+.image-carousel-container {
+  display: flex;
+  width: 100%;
+  max-width: 550px;
+  height: 350px;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+.image-carousel-container img {
+  width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
+}
+
+.btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  z-index: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+.btn:active {
+  transform: scale(1.1);
+}
+
+.btn-prev {
+  top: 45%;
+  left: 2%;
+}
+
+.btn-next {
+  top: 45%;
+  right: 2%;
+}
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Style for the active dot */
+.dot.active {
+  background-color: #ffffff;
+}

@@ -3,7 +3,7 @@ function addTask() {
   var taskInput = document.getElementById("taskInput");
   var taskList = document.getElementById("taskList");
   
-  var taskText = taskInput.value.trim();
+  var taskText = taskInput.value;
 
   if (taskText !== "") {
     var li = document.createElement("li");
@@ -25,8 +25,8 @@ function addTask() {
     taskList.appendChild(li);
 
     taskInput.value = "";
-
-    filterTasks(); // To update task visibility based on filters
+5
+    filterTasks();
   } else {
     alert("Please enter a task!");
   }
@@ -52,28 +52,28 @@ function filterTasks(filterType) {
 }
 
 
-function searchTasks() {
-  var input, filter, ul, li, txtValue;
-  input = document.getElementById('searchInput');
-  filter = input.value.toUpperCase();
-  ul = document.getElementById('taskList');
-  li = ul.getElementsByTagName('li');
+// function searchTasks() {
+//   var input, filter, ul, li, txtValue;
+//   input = document.getElementById('searchInput');
+//   filter = input.value.toUpperCase();
+//   ul = document.getElementById('taskList');
+//   li = ul.getElementsByTagName('li');
 
-  let found = false;
-  Array.from(li).forEach(function(task) {
-    txtValue = task.textContent || task.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      task.style.display = '';
-      found = true;
-    } else {
-      task.style.display = 'none';
-    }
-  });
+//   let found = false;
+//   Array.from(li).forEach(function(task) {
+//     txtValue = task.textContent || task.innerText;
+//     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//       task.style.display = '';
+//       found = true;
+//     } else {
+//       task.style.display = 'none';
+//     }
+//   });
 
-  const notFoundMessage = document.getElementById('notFoundMessage');
-  if (!found) {
-    notFoundMessage.style.display = 'block';
-  } else {
-    notFoundMessage.style.display = 'none';
-  }
-}
+//   const notFoundMessage = document.getElementById('notFoundMessage');
+//   if (!found) {
+//     notFoundMessage.style.display = 'block';
+//   } else {
+//     notFoundMessage.style.display = 'none';
+//   }
+// }
