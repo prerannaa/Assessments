@@ -1,4 +1,5 @@
 
+
 class Ball{
     constructor(x,y){
         this.x=x;
@@ -43,62 +44,66 @@ class Ball{
     }
 
     checkWallCollision=(boundaryLeft, boundaryTop, boundaryWidth, boundaryHeight)=>{
-        
-        
-        this.x += this.dx;
-        this.y += this.dy;
-    
-        // Adjust the ball's position if it goes beyond the boundaries
-        if (this.x - this.r < boundaryLeft) {
-            this.x = boundaryLeft + this.r;
-            this.dx = -this.dx;
-        } else if (this.x + this.r > boundaryWidth) {
-            this.x = boundaryWidth - this.r;
-            this.dx = -this.dx;
-        }
-    
-        if (this.y - this.r < boundaryTop) {
-            this.y = boundaryTop + this.r;
-            this.dy = -this.dy;
-        } else if (this.y + this.r > boundaryHeight) {
-            this.y = boundaryHeight - this.r;
-            this.dy = -this.dy;
-        }
-    }
-    
-    checkBallCollision=(ball)=>{
-        const dist=distance(this.x,this.y,ball.x,ball.y);
-        const sumOfRadii =this.r+ball.r;
-        if(dist<=sumOfRadii){
+        if(this.x<boundaryLeft || this.x+BALL_WIDTH>boundaryWidth){
             this.dx=-this.dx;
+        }
+        if(this.y<boundaryTop || this.y+BALL_HEIGHT>boundaryHeight){
             this.dy=-this.dy;
-
-            ball.dx=-ball.dx;
-            ball.dy=-ball.dy;
-        }
-        if (checkBallCollision(ball)) {
-            this.resolveCollision(ball);
         }
     }
 
-    resolveCollision = (ball) =>{
-        const dist=distance(this.x,this.y,ball.x,ball.y);
-        const penetration = this.r + ball.r - dist;
+    // checkBallCollision=(ball)=>{
+    //     const dist=distance(this.x,this.y,ball.x,ball.y);
+    //     const sumOfRadii =this.r+ball.r;
+    //     if(dist<=sumOfRadii){
+    //         this.dx=-this.dx;
+    //         this.dy=-this.dy;
 
-        const penetrationX = (dx/dist) * penetration * 0.5;
-        const penetrationY = (dy/dist) * penetration * 0.5;
-        this.x +=penetrationX;
-        this.y +=penetrationY;
-        ball.x -=penetrationX;
-        ball.y -=penetrationY;
-    }
-
-    // if(checkBallCollision(ball))
-    // {
-    //     resolveCollision(ball);
+    //         ball.dx=-ball.dx;
+    //         ball.dy=-ball.dy;
+    //     }
     // }
 
+    checkBallCollision = (ball, boundaryLeft, boundaryTop, boundaryWidth, boundaryHeight) => {
+        const dx = ball.x - this.x;
+        const dy = ball.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const sumOfRadii = this.r + ball.r;
+    
+        if (distance <= sumOfRadii) {
+            // Determine the angle of collision
+            const angle = Math.atan2(dy, dx);
+    
+            // Calculate the minimum distance to prevent overlap
+            const minDistance = sumOfRadii - distance + 1;
+    
+            // Calculate the adjustment needed for both balls to prevent overlap
+            const adjustmentX = Math.cos(angle) * minDistance;
+            const adjustmentY = Math.sin(angle) * minDistance;
+    
+            // Move the balls apart along the collision angle
+            this.x -= adjustmentX / 2;
+            this.y -= adjustmentY / 2;
+            ball.x += adjustmentX / 2;
+            ball.y += adjustmentY / 2;
+    
+            // Reflect velocities for a simple collision effect
+            const tempDx = this.dx;
+            const tempDy = this.dy;
+            this.dx = ball.dx;
+            this.dy = ball.dy;
+            ball.dx = tempDx;
+            ball.dy = tempDy;
+    
+            // Check and handle collision with the boundaries
+            this.checkWallCollision(boundaryLeft, boundaryTop, boundaryWidth, boundaryHeight);
+            ball.checkWallCollision(boundaryLeft, boundaryTop, boundaryWidth, boundaryHeight);
+        }
+    };
+    
+
 }
+
 
 const ViewPort=document.querySelector('#viewport');
 const ballsArray=[];
@@ -112,16 +117,29 @@ for(let i=0; i<BALL_COUNT;i++){
 ballsArray.forEach(ball=>{
     ViewPort.appendChild(ball.getElement());
 });
-function render(){
-    ballsArray.forEach(ball=>{
+// function render(){
+//     ballsArray.forEach(ball=>{
+//         ball.draw();
+//         ball.move();
+//         ball.checkWallCollision(0,0,VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
+//         ballsArray.forEach(otherball=>{
+//             if(ball===otherball) return;
+//             ball.checkBallCollision(otherball);
+//         });
+//     });
+//     requestAnimationFrame(render);
+// }
+function render() {
+    ballsArray.forEach(ball => {
         ball.draw();
         ball.move();
-        ball.checkWallCollision(0,0,VIEWPORT_WIDTH,VIEWPORT_HEIGHT);
-        ballsArray.forEach(otherball=>{
-            if(ball===otherball) return;
-            ball.checkBallCollision(otherball);
+        ball.checkWallCollision(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        ballsArray.forEach(otherBall => {
+            if (ball === otherBall) return;
+            ball.checkBallCollision(otherBall, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         });
     });
     requestAnimationFrame(render);
 }
+
 render();

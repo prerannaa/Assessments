@@ -6,8 +6,8 @@
     border: 1px solid black;
   }
   .ball {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     background-color: rgb(128, 0, 113);
     position: absolute; 
     border-radius: 50%;
