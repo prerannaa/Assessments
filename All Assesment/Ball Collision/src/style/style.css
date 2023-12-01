@@ -1,0 +1,14 @@
+.viewport {
+    margin: 10px;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    border: 1px solid black;
+  }
+  .ball {
+    width: 10px;
+    height: 10px;
+    background-color: rgb(128, 0, 113);
+    position: absolute; 
+    border-radius: 50%;
+  }
