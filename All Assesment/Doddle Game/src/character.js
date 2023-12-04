@@ -15,9 +15,6 @@ class Character{
     }
 
     draw(ctx){
-        // ctx.fillStyle = this.color;
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-
         ctx.drawImage(image,this.x, this.y, this.width, this.height);
     }
 }

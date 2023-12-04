@@ -24,42 +24,39 @@ function displayScore(ctx) {
 }
 
 
-function checkGameOver() {
-  if (player.y + player.height >= canvas.height && gameStarted === true) {
-      // Player has touched the bottom, end the game
-      player.y = canvas.height - player.height; // Reset player position
-      player.isGrounded = true;
-
-      // Display game-over message
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'grey';
-      ctx.font = '30px Arial';
-      const gameOverText = 'Game Over';
-      const scoreText = `Score: ${score}`;
-      const textWidth = ctx.measureText(gameOverText).width;
-      const textX = (canvas.width - textWidth) / 2;
-      ctx.fillText(gameOverText, textX, canvas.height / 2 - 15);
-      ctx.fillText(scoreText, textX, canvas.height / 2 + 15);
-
-      // Restart the game after 3 seconds
-      setTimeout(() => {
-          player.y = canvas.height - player.height;
-          gameStarted = false;
-          player.isGrounded = true;
-          player.currentPlatform = -1;
-          isPlatformMoving = false; // Stop platform movement
-          requestAnimationFrame(animate); // Restart the game loop
-      }, 3000);
-
-      return; // Stop the game loop
-  }
-}
-
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (player.y < HALF_CANVAS_HEIGHT) {
+        platforms.forEach((platform) => (platform.y += SPEED));
+    }
+
     player.draw(ctx);
     displayScore(ctx);
     platforms.forEach((platform) => platform.draw(ctx));
+
+    // Generate new platform when timer reaches a certain value
+    if (timer % 150 === 0) {
+        generatePlatform();
+    }
+
+    // End the game if player's height is greater than or equal to canvas height
+    if (player.y + player.height >= canvas.height) {
+        gameOver();
+        return;
+    }
+
+    // Check if player is above half the canvas height, and end the game if player is below the canvas
+    if (player.y < HALF_CANVAS_HEIGHT && player.y + player.height > canvas.height) {
+        gameOver();
+        return;
+    }
+
+    // Check if player is above half the canvas height, and end the game if player is below the canvas
+    if (player.y < HALF_CANVAS_HEIGHT && player.y + player.height > canvas.height) {
+        gameOver();
+        return;
+    }
 
     if (keys.A || keys.D) {
         player.vx = keys.A ? -SPEED : SPEED;
@@ -100,40 +97,30 @@ function animate() {
             player.y = platform.y - player.height;
             player.isGrounded = true;
         }
-        platform.y += 1;
     });
 
     timer++;
-    if (timer % 150 === 0) {
-        generatePlatform();
-        timer = 0;
-    }
-
-    checkGameOver();
-
-    if (!isPlatformMoving && keys.SPACE) {
-      isPlatformMoving = true;
-      gameStarted = true
-    }
-
-    if (isPlatformMoving) {
-        platforms.forEach((platform) => {
-            if (collisionDetection(player, platform)) {
-                player.y = platform.y - player.height;
-                player.isGrounded = true;
-            }
-            platform.y += 1;
-        });
-    }
-
-  //   platforms.forEach((platform) => {
-  //     if (collisionDetection(player, platform)) {
-  //         player.y = platform.y - player.height;
-  //         player.isGrounded = true;
-  //     }
-  //     platform.y += 1; // This line increases the y-coordinate of each platform, creating a sense of upward movement.
-  // });
     requestAnimationFrame(animate);
+}
+
+function gameOver() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
+
+    ctx.fillStyle = 'black';
+    ctx.font = '30px Arial';
+    ctx.fillText(`Game Over! Score: ${score}`, canvas.width / 2 - 150, canvas.height / 2);
+
+    // Restart the game after 3 seconds
+    setTimeout(() => {
+        player.y = 50;
+        platforms.splice(1); // Remove all platforms except the ground
+        timer = 0;
+        score = 0;
+        animate();
+    }, 3000);
+
+    // Stop the current animation frame
+    cancelAnimationFrame(animate);
 }
 
 animate();

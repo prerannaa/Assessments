@@ -1,3 +1,6 @@
+// const image = new Image();
+// image.src = 'assets/platform-source-img.png';
+
 class Platform {
     constructor(x, y, width, height, number) {
         this.x = x;
