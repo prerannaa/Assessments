@@ -1,5 +1,5 @@
-// const image = new Image();
-// image.src = 'assets/platform-source-img.png';
+const platformImage = new Image();
+platformImage.src = 'assets/platform.png';
 
 class Platform {
     constructor(x, y, width, height, number) {
@@ -12,7 +12,6 @@ class Platform {
     }
 
     draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(platformImage,this.x, this.y, this.width, this.height);
     }
 }
