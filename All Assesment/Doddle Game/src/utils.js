@@ -1,14 +1,12 @@
-function collisionDetection(rect1, rect2){
-    return(
-        rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.y + rect1.height > rect2.y
+function collisionDetection(player, platform) {
+    return (
+        player.x < platform.x + platform.width &&
+        player.x + player.width > platform.x &&
+        player.y < platform.y + platform.height &&
+        player.y + player.height > platform.y
     );
-    
 }
 
-function random(min, max)
-{
-    return min + Math.random() * (max-min);
+function random(min, max) {
+    return min + Math.random() * (max - min);
 }

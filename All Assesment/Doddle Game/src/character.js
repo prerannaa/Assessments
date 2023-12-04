@@ -7,10 +7,11 @@ class Character{
         this.y = y;
         this.width = width;
         this.height = height;
-        this.color = '#49c';
-        this.vy = 0 ; //velocity along y-axis
-        this.vx = 0 ; //velocity along x-axis
-        this.isGrounded = false;
+        this.vx = 0;
+        this.vy = 0;
+        this.isGrounded = true;
+        this.justJumped = false;
+        this.currentPlatform = -1;
     }
 
     draw(ctx){
