@@ -1,5 +1,7 @@
-#canvas{
+canvas{
         position: absolute;
         top: 50%;
-        transform: translate(160%, -50%);              
+        transform: translate(160%, -50%);
+        background-image: url('assets/background.png'); 
+        /* background-size: cover;      */
 }
