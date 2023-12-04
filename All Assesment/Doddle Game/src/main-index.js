@@ -6,6 +6,10 @@ const ground = new Platform(0, canvas.height - 20, canvas.width, 20, 0); // Grou
 const platforms = [ground];
 let timer = 0;
 let score = 0; // Initialize score
+let isPlatformMoving = false;
+let gameOverScore = 0;
+let gameStarted = false;
+
 
 function generatePlatform() {
     const platformNumber = platforms.length;
@@ -19,20 +23,36 @@ function displayScore(ctx) {
     ctx.fillText(`Score: ${score}`, canvas.width - 120, 30); // Display score at top right
 }
 
-function collisionDetection(player, platform) {
-    const isColliding =
-        player.x < platform.x + platform.width &&
-        player.x + player.width > platform.x &&
-        player.y < platform.y + platform.height &&
-        player.y + player.height > platform.y;
 
-    if (isColliding && !player.isGrounded && player.justJumped && player.currentPlatform !== platform.number) {
-        score = platform.number;
-        player.justJumped = false; // Reset the flag after scoring
-        player.currentPlatform = platform.number; // Update current platform
-    }
+function checkGameOver() {
+  if (player.y + player.height >= canvas.height && gameStarted === true) {
+      // Player has touched the bottom, end the game
+      player.y = canvas.height - player.height; // Reset player position
+      player.isGrounded = true;
 
-    return isColliding;
+      // Display game-over message
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'grey';
+      ctx.font = '30px Arial';
+      const gameOverText = 'Game Over';
+      const scoreText = `Score: ${score}`;
+      const textWidth = ctx.measureText(gameOverText).width;
+      const textX = (canvas.width - textWidth) / 2;
+      ctx.fillText(gameOverText, textX, canvas.height / 2 - 15);
+      ctx.fillText(scoreText, textX, canvas.height / 2 + 15);
+
+      // Restart the game after 3 seconds
+      setTimeout(() => {
+          player.y = canvas.height - player.height;
+          gameStarted = false;
+          player.isGrounded = true;
+          player.currentPlatform = -1;
+          isPlatformMoving = false; // Stop platform movement
+          requestAnimationFrame(animate); // Restart the game loop
+      }, 3000);
+
+      return; // Stop the game loop
+  }
 }
 
 function animate() {
@@ -89,6 +109,30 @@ function animate() {
         timer = 0;
     }
 
+    checkGameOver();
+
+    if (!isPlatformMoving && keys.SPACE) {
+      isPlatformMoving = true;
+      gameStarted = true
+    }
+
+    if (isPlatformMoving) {
+        platforms.forEach((platform) => {
+            if (collisionDetection(player, platform)) {
+                player.y = platform.y - player.height;
+                player.isGrounded = true;
+            }
+            platform.y += 1;
+        });
+    }
+
+  //   platforms.forEach((platform) => {
+  //     if (collisionDetection(player, platform)) {
+  //         player.y = platform.y - player.height;
+  //         player.isGrounded = true;
+  //     }
+  //     platform.y += 1; // This line increases the y-coordinate of each platform, creating a sense of upward movement.
+  // });
     requestAnimationFrame(animate);
 }
 
