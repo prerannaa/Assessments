@@ -28,13 +28,5 @@ class Terrain {
             ctx.fillRect(i * this.columnWidth, this.heights[i], this.columnWidth, canvas.height - this.heights[i]);
         }
     }
-    getHeight(x) {
-        // Interpolate the height based on the x position
-        const column = Math.floor(x / this.columnWidth);
-        const leftHeight = this.heights[column];
-        const rightHeight = this.heights[column + 1];
-        const t = (x % this.columnWidth) / this.columnWidth;
-        return leftHeight + t * (rightHeight - leftHeight);
-    }
     
 }

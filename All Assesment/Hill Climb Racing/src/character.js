@@ -1,27 +1,23 @@
 const imageSrc = 'assets/Car.png';
 
 class Character {
-    constructor(position, width,height, terrain, leftWheel, rightWheel){
-        // this.position = position;
-        if (!leftWheel || !rightWheel) {
-            throw new Error("Both leftWheel and rightWheel must be provided");
-        }
-        this.position = { x: position.x, y: terrain.getHeight(position.x) };
+    constructor(position, width,height){
+        this.position = position;
         this.width = width;
         this.height = height;
         this.radius = 3;
         this.vx = 0; //velocity of character along x axis
         this.vy = 1; //velocity of character along y axis
         this.image = new Image();
-        this.image.src = imageSrc;
-        this.leftWheel = leftWheel;
-        this.rightWheel = rightWheel;
+        this.image.src = imageSrc;  
 
 
     }
     draw(){
         ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
+
+
 
     update(){
         this.draw();
@@ -39,4 +35,5 @@ class Character {
         }
 
     }
+
 }
