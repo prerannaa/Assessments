@@ -43,8 +43,7 @@ class Car {
     }
 
     update() {
-        //this.draw();
-        this.drawDistance();
+        ctx.save();
         this.terrain.checkCollision(this);
         this.position.y += this.vy;
         if (this.position.y + this.wheelHeight + this.vy < canvas.height)
@@ -64,12 +63,14 @@ class Car {
             this.lastXPosition = this.position.x;
         }
 
-        if (this.position.x > canvas.width/5){
+        if (this.position.x > canvas.width/3) {
             const translationAmount = this.vx;
             ctx.translate(-translationAmount, 0);
+            this.position.x -= translationAmount; // Adjust the car's x position
         }
-
         this.draw();
+        ctx.restore();
+        this.drawDistance();
 
 
     }
