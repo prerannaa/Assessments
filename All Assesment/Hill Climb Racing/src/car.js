@@ -46,42 +46,19 @@ class Car {
         ctx.save();
         this.terrain.checkCollision(this);
         this.position.y += this.vy;
-        if (this.position.y + this.wheelHeight + this.vy < canvas.height)
-        {
-            this.vy += GRAVITY
-        } 
-        else
-        {
-            this.vy = 0;
-            this.rotation += this.vx * this.rotationSpeed
-
-        }
         this.position.x += this.vx
 
-        if (this.position.x > this.lastXPosition) {
-            this.distanceCovered += this.position.x - this.lastXPosition;
-            this.lastXPosition = this.position.x;
-        }
-
-        if (this.position.x > canvas.width/3) {
-            const translationAmount = this.vx;
-            ctx.translate(-translationAmount, 0);
-            this.position.x -= translationAmount; // Adjust the car's x position
-        }
-        this.draw();
+        // if (this.position.x > this.lastXPosition) {
+        //     this.distanceCovered += this.position.x - this.lastXPosition;
+        //     this.lastXPosition = this.position.x;
+        // }
+        
+        // this.draw();
         ctx.restore();
-        this.drawDistance();
+        //this.drawDistance();
 
 
     }
-
-    drawDistance(){
-        ctx.fillStyle = "white";
-        ctx.font = "16px Arial";
-        ctx.fillText("Distance: " + Math.round(this.distanceCovered), canvas.width - 120, 30);
-    }
-    
-
     updateWheel(){
         this.drawWheel()
     }
