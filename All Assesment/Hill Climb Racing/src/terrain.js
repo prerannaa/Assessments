@@ -12,28 +12,6 @@ class Terrain {
         ctx.fillRect(this.x, this.terrainHeight, 1000, canvas.height - this.terrainHeight);
     }
 
-    // checkCollision(car) {
-    //     const carBottomY = car.position.y + car.carHeight + car.wheelHeight;
-
-    //     if (carBottomY > this.terrainHeight) {
-    //         // Collision with terrain
-    //         car.position.y  = this.terrainHeight - car.carHeight;
-    //         car.vy = 0;
-    //         // Adjust car position based on terrain slope (for a straight line, no adjustment needed)
-    //         car.position.x += car.vx;
-    //         car.rotation += car.vx * car.rotationSpeed;
-    //         console.log("Collision Detected")
-    //     }
-    //     else if (car.position.y + car.carHeight < canvas.height){
-    //         car.vy += GRAVITY;
-    //         car.position.y += car.vy;
-    //         console.log("Falling off the canvas");
-    //     }  
-    //     else {
-    //         console.log("Collision Ended");
-    //     }
-    // }
-
     checkCollision(car) {
         const carBottomY = car.position.y + car.carHeight + car.wheelHeight;
     
@@ -45,7 +23,6 @@ class Terrain {
             // Adjust car position based on terrain slope (for a straight line, no adjustment needed)
             car.position.x += car.vx;
             car.rotation += car.vx * car.rotationSpeed;
-            console.log("Collision Detected");
         }
         else {
             // Car is not colliding with terrain, apply gravity and let it fall
@@ -54,9 +31,6 @@ class Terrain {
             
             // Check if the car has fallen off the canvas
             if (car.position.y + car.carHeight > canvas.height) {
-                console.log("Falling off the canvas");
-                // Handle falling off the canvas (reset position, etc. as needed)
-                // For example, you could reset the car to an initial position.
                 car.position.x = initialX;
                 car.position.y = initialY;
                 car.vy = 0;
@@ -78,6 +52,3 @@ class Terrain {
         ctx.font = "16px Arial";
         ctx.fillText("Distance: " + Math.round(this.distanceCovered), canvas.width - 120, 30);
     }}
-
-
-
