@@ -2,36 +2,47 @@ const carImageSrc = 'assets/Car.png';
 const wheelImageSrc = 'assets/Tire.png';
 
 class Car {
-    constructor(position, carWidth, carHeight, wheelWidth, wheelHeight, terrain) {
+    constructor(position, carWidth, carHeight, wheelWidth, wheelHeight, terrains) {
+        this.carImage = new Image();
+        this.carImage.src = carImageSrc;
+        this.wheelImage = new Image();
+        this.wheelImage.src = wheelImageSrc;
         this.position = position;
         this.carWidth = carWidth;
         this.carHeight = carHeight;
         this.wheelWidth = wheelWidth;
         this.wheelHeight = wheelHeight;
+        this.wheelRadius = wheelWidth/2;
         this.vx = 0; // Velocity along x axis
         this.vy = 1; // Velocity along y axis
-        this.carImage = new Image();
-        this.carImage.src = carImageSrc;
-        this.wheelImage = new Image();
-        this.wheelImage.src = wheelImageSrc;
         this.rotation = 0; // Initial rotation angle for wheels
         this.rotationSpeed = 0.2; // Rotation speed for wheels
-        this.terrain = terrain;
+        this.terrain = terrains;
         this.distanceCovered = 0;
         this.lastXPosition = position.x;
+    }
 
+
+    getLeftWheelCenter() {
+        let leftWheelY = this.position.y + this.carHeight - (this.wheelHeight*1.15);
+        let leftWheelX = this.position.x + this.carWidth * 0.001 + this.wheelRadius*0.4;
+        return { x: leftWheelX , y: leftWheelY + this.wheelRadius };
+    }
+
+    getRightWheelCenter() {
+        let rightWheelY = this.position.y + this.carHeight - (this.wheelHeight*1.15);
+        let rightWheelX = this.position.x + this.carWidth * 0.7 - this.wheelRadius;
+        return { x: rightWheelX + this.wheelRadius, y: rightWheelY + this.wheelRadius };
     }
 
     draw() {
-        // Draw car
-        ctx.drawImage(this.carImage, this.position.x, this.position.y, this.carWidth, this.carHeight);
+        ctx.drawImage(this.carImage, this.position.x, this.position.y, this.carWidth, this.carHeight);        
+        const leftWheelCenter = this.getLeftWheelCenter();
+        const rightWheelCenter = this.getRightWheelCenter();
 
-        // Draw wheels
-        const wheelY = this.position.y + this.carHeight - (this.wheelHeight/1.5);
-        const leftWheelX = this.position.x + this.carWidth * 0.07; // Adjust based on your desired position
-        const rightWheelX = this.position.x + this.carWidth * 0.94 - this.wheelWidth; // Adjust based on your desired position
-        this.drawWheel(leftWheelX, wheelY);
-        this.drawWheel(rightWheelX, wheelY);
+        // Draw lines representing the wheels for visualization
+        this.drawWheel(leftWheelCenter.x, leftWheelCenter.y);
+        this.drawWheel(rightWheelCenter.x, rightWheelCenter.y);
     }
 
     drawWheel(x, y) {
@@ -42,62 +53,116 @@ class Car {
         ctx.restore();
     }
 
-    update() {
 
-        // Calculate new X & Y positions of the car based on the terrain
-        const terrainLineSegments = this.terrain.getLineSegments();
-        const frontWheelX = this.position.x + this.carWidth;
-        const rearWheelX = this.position.x;
+    checkCollision(lineSegments, wheelCenter) {
+        let collision = this.circleLineCollision({ center: wheelCenter, radius: this.wheelRadius }, lineSegments);
 
-        const frontWheelTerrainY = this.findTerrainY(frontWheelX, terrainLineSegments);
-        const rearWheelTerrainY = this.findTerrainY(rearWheelX, terrainLineSegments);
-
-        // Update the position of the car based on the terrain
-        this.position.x += this.vx;
-        this.position.y = Math.min(frontWheelTerrainY, rearWheelTerrainY) - this.carHeight;
-
-        this.draw();
-    }
-
-    findTerrainY(x, lineSegments) {
-        for (const segment of lineSegments) {
-            if (x >= segment.x1 && x <= segment.x2) {
-                const t = (x - segment.x1) / (segment.x2 - segment.x1);
-                return segment.y1 + t * (segment.y2 - segment.y1);
-            }
+        if (collision.isCollided) {
+        //    wheelCenter.x = collision.x - this.wheelRadius;
+        //    wheelCenter.y = collision.y - this.wheelRadius;
+            this.position =  {x : collision.x, y : collision.y};
+            return collision.isCollided;
+        } else {
+            return false
         }
-        return canvas.height; // Default to the bottom of the canvas if not found
-    }
-    checkCollision() {
-
-        const frontWheelX = this.position.x + this.carWidth;
-        const frontWheelY = this.position.y + this.carHeight;
         
-        const rearWheelX = this.position.x;
-        const rearWheelY = this.position.y + this.carHeight;
-    
-        const terrainLineSegments = this.terrain.getLineSegments();
-    
-        if (this.circleToLineCollision(frontWheelX, frontWheelY, terrainLineSegments) ||
-            this.circleToLineCollision(rearWheelX, rearWheelY, terrainLineSegments)) {
-            // Collision detected
-            // Handle collision logic here
-        }
     }
 
-    circleToLineCollision(x, y, lineSegments) {
-        for (const segment of lineSegments) {
-            const closestX = Math.max(segment.x1, Math.min(x, segment.x2));
-            const closestY = Math.max(segment.y1, Math.min(y, segment.y2));
-            const distance = Math.sqrt((x - closestX) ** 2 + (y - closestY) ** 2);
+    circleLineCollision(circle, lineSegments) {
+        // const distances = []
 
-            if (distance <= this.wheelWidth / 2) {
-                // Collision detected
+        for (let i = 0; i < lineSegments.length; i++) {
+            const lineSegment  = lineSegments[i];
+            for(let j = 0; j < lineSegment.length; j++){
+                let line = lineSegment[j];
+                let x1 = line.x1;
+                let x2 = line.x2;
+                let y = line.y1; //y is equal for line
+                if(circle.center.x >= line.x1 && circle.center.x <= line.x2 ) {
+                // Calculate the vector representing the line segment
+                // let dX = x2 - x1;
+                // let dY = y; //always 0
+                // distances.push({ dx: dX, dy: dY });
+                
+                if(circle.center.y + this.wheelRadius <  y )
+                {
+                    continue;
+                }
+                return {isCollided:true, x: circle.center.x, y: y}
+
+            }
+
+                // Vector representing the line segment
+                // const lineVector = { x: dX, y: dY };
+                // // Vector representing the circle's center to one endpoint of the line segment
+                // const circleToLineStart = { x: circle.center.x - line.x1, y: circle.center.y - line.y1 };  
+                // // Dot product of the line vector and the vector to the circle center
+                // const dotProduct = (circleToLineStart.x * lineVector.x) + (circleToLineStart.y * lineVector.y);
+                // // Calculate the squared length of the line segment
+                // const lineLengthSquared = (lineVector.x * lineVector.x) + (lineVector.y * lineVector.y);
+                // // Calculate the projection of the circle's center onto the line segment
+                // const t = Math.max(0, Math.min(1, dotProduct / lineLengthSquared));
+                // const projection = { x: line.x1 + t * lineVector.x, y: line.y1 + t * lineVector.y };
+                // // Calculate the distance between the circle's center and the projection point
+                // const distance = Math.sqrt((circle.center.x - projection.x) ** 2 + (circle.center.y - projection.y) ** 2);
+                // // Check if the distance is less than or equal to the circle's radius
+                // if (distance < circle.radius) {
+                //      // Collision detected with at least one line segment
+                // }
             }
         }
-        return false; // No collision
+        return false;
     }
-    updateWheel(){
-        this.drawWheel()
+    
+    update() {
+        // this.position.x += this.vx;
+        // this.position.y += GRAVITY;    
+        car.draw();    
+    }
+
+
+    updateWheel() {
+        let isGrounded = false;
+        let leftWheelCenter = this.getLeftWheelCenter();
+        let rightWheelCenter = this.getRightWheelCenter();
+
+        let allTerrainLineSegments = [];
+        this.terrain.forEach((item) => {
+            const terrainLineSegments = item.generateLineSegments();
+            allTerrainLineSegments.push(terrainLineSegments);
+        });
+
+        // Check collision for the left wheel
+        
+        let leftGrounded = this.checkCollision(allTerrainLineSegments, leftWheelCenter);
+        let rightGrounded = this.checkCollision(allTerrainLineSegments, rightWheelCenter);
+        
+        isGrounded = leftGrounded || rightGrounded;
+
+        if(!isGrounded) {
+            this.position.y +=  GRAVITY;
+        } 
+        if(isGrounded) {
+            this.position.x = (leftWheelCenter.x + rightWheelCenter.x)/2;
+            this.position.y = (leftWheelCenter.y + rightGrounded.x)/2 - carHeight/2; 
+        }
+        
+        // if (this.position.y + this.carHeight + this.wheelHeight/3 + this.vy < canvas.height)
+        // {
+        //     this.vy += GRAVITY
+        // } 
+        // else
+        // {
+        //     this.vy = 0;
+        //     this.rotation += this.vx * this.rotationSpeed
+        // }
+        // this.position.x += this.vx
     }
 }
+
+
+        // const allTerrainHeightAtX = [];
+        // this.terrain.forEach((item) => {
+        //     const terrainHeightAtX = item.calculateTerrainHeightAtX();
+        //     allTerrainHeightAtX.push(terrainHeightAtX);
+        // });

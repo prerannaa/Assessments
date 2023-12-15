@@ -4,6 +4,6 @@ body{
 canvas{
     position: absolute;
     top: 50%;
-    transform: translate(30%, -50%); 
+    transform: translate(0%, -50%); 
     background-color: rgb(135, 206, 235);
 }
