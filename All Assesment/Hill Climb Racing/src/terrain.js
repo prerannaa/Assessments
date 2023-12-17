@@ -8,7 +8,7 @@ class Terrain {
         this.lastXPosition = this.x;
         this.sineAmplitude = 30; // Amplitude of the sine wave
         this.sineFrequency = 0.01; // Frequency of the sine wave
-        this.segmentWidth = 3; // Width of each line segment
+        this.segmentWidth = 30; // Width of each line segment
         this.lineSegments = this.generateLineSegments();
         this.terrainWidth = width;
     }
@@ -33,21 +33,12 @@ class Terrain {
         return this.segmentWidth * this.lineSegments.length;
     }
 
-    calculateTerrainHeightAtX() {
-        let interpolatedYValues = [];
-
-        for (let segment of this.lineSegments) {
-            // Check if the x position is within the current segment
-            if (60 >= segment.x1 && 60 <= segment.x2) {
-                // Calculate the interpolation factor (t) within the segment
-                let t = (60 - segment.x1) / (segment.x2 - segment.x1);
-                // Interpolate the y value at the specified x position
-                let interpolatedY = segment.y1 + t * (segment.y2 - segment.y1);
-                interpolatedYValues.push(interpolatedY);
+    calculateTerrainHeightAtX(x) {
+        for( let segment of this.lineSegments) {
+            if(x > segment.x1 && x < segment.x2) {
+                return segment.y1;
             }
         }
-        // If the x position is outside the terrain
-        return this.terrainHeight;
     }
     
     update() {
