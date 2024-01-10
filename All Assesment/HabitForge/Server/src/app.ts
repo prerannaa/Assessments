@@ -1,21 +1,31 @@
-import express, { Request, Response } from 'express';
-import "./database/connection";
+import express from "express";
 import dotenv from "dotenv";
-import userRoutes from './routes/userRoute';
+import cookieParser from "cookie-parser";
+import router from './routes/indexRoute';
+import "./database/connection";
+import { genericErrorHandler, notFoundError } from "./middlewares/errorHandler";
+import cors from 'cors';
 
-const path = __dirname + "/../../.env";
-dotenv.config({ path: path });
+
+dotenv.config();
+
+const serverPort = process.env.SERVER_PORT || 8000;
+
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, Express with TypeScript!');
-});
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
+app.use("/api", router);
 
-app.use(userRoutes);
+app.use(genericErrorHandler);
+app.use(notFoundError);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(serverPort, async () => {
+  console.log(`Server started on http://localhost:${serverPort}`);
 });

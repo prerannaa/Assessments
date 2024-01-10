@@ -1,75 +1,51 @@
-import { Request, Response } from 'express';
-import UserService from '../services/AuthService';
+import { Request, Response, NextFunction } from 'express';
+import { IUserLogin, IUserRegister } from '../interfaces/authInterface';
+import { userRegister, userLogin } from '../services/AuthService';
 
-class UserController {
-  async createUser(req: Request, res: Response): Promise<void> {
-    try {
-      const { username, password, email } = req.body;
-      const user = await UserService.createUser({ username, password, email });
-      res.status(201).json(user);
-    } catch (error) { 
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+
+/**
+ * Handles the registration of a new user.
+ * @param req - The Express request object containing the user registration details.
+ * @param res - The Express response object to send the result.
+ * @param next - The Express next function to handle errors.
+ */
+export const handleUserRegistration = async(
+  req: IUserRegister,
+  res: Response,
+  next: NextFunction
+) => {
+  try{
+    const {username, password, email} = req.body;
+    const data = await userRegister( username, password, email);
+    res.status(data.status).json(data.message);
+  } catch(error){
+    next(error)
   }
+};
 
-  async getAllUsers(req: Request, res: Response): Promise<void> {
-    try {
-      const users = await UserService.getAllUsers();
-      res.status(200).json(users);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+/**
+ * Handles the user login process, including authentication and token generation.
+ * Sets cookies with access and refresh tokens in the response.
+ * @param req - The Express request object containing the user login details.
+ * @param res - The Express response object to send the result and set cookies.
+ * @param next - The Express next function to handle errors.
+ */
 
-  async getUserById(req: Request, res: Response): Promise<void> {
-    try {
-      const userId = req.params.id;
-      const user = await UserService.getUserById(userId);
-      if (user) {
-        res.status(200).json(user);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+export const handleUserLogin = async(
+  req: IUserLogin,
+  res: Response,
+  next: NextFunction
+) => {
+  try{
+    const {username, password} =req.body;
+    const data = await userLogin (username, password);
+    res
+      .status(data.status)
+      .json(data.message)
+      .cookie("accessToken", data.data.accessToken)
+      .cookie("refreshToken", data.data.refreshToken);
 
-  async updateUser(req: Request, res: Response): Promise<void> {
-    try {
-      const userId = req.params.id;
-      const { username, password, email } = req.body;
-      const [affectedCount, [updatedUser]] = await UserService.updateUser(userId, { username, password, email });
-
-      if (affectedCount > 0 && updatedUser) {
-        res.status(200).json(updatedUser);
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
-
-  async deleteUser(req: Request, res: Response): Promise<void> {
-    try {
-      const userId = req.params.id;
-      const deletedRows = await UserService.deleteUser(userId);
-
-      if (deletedRows > 0) {
-        res.status(204).send();
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+  } catch(error){
+    next(error)
   }
 }
-
-export default new UserController();
