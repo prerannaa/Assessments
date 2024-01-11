@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { IUserLogin, IUserRegister } from '../interfaces/authInterface';
 import { userRegister, userLogin } from '../services/AuthService';
-
+import { UploadImage } from '../services/uploadService';
 
 /**
  * Handles the registration of a new user.
@@ -48,4 +48,4 @@ export const handleUserLogin = async(
   } catch(error){
     next(error)
   }
-}
+};

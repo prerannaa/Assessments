@@ -1,5 +1,5 @@
 export interface IUserRegister {
-  body: { email: string; username: string; password: string };
+  body: { email: string; username: string; password: string; };
 }
 
 export interface IUserLogin {

@@ -1,5 +1,5 @@
 import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";
+// import "toastify-js/src/toastify.css";
 
 export const toast = ( status: string, message: string) =>{
     Toastify({

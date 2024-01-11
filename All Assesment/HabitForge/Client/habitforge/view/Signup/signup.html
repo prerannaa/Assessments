@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="/style/signup.css">
+</head>
+
+<body>
+    <div class="container" >
+        <h2>Signup</h2>
+        <form id="registration-form">
+            <div class="image-container">
+                <label for="file-input" class="image-upload">
+                    <img src="/upload-photo.png" alt="Profile Picture" class="profile-img" id="profile-img"/>
+                    <input id="file-input" type="file">
+                </label>
+            </div>
+            <div class="username-container">
+                <input type="text" placeholder="Username" id="signup-username" required>
+                <div class="invalid-feedback">
+                    Please provide a valid Username.
+                </div>
+            </div>
+            <div class="password-container">
+                <input type="password" placeholder="Password" id="signup-password" required>
+                <div class="invalid-feedback">
+                    Please provide a valid password.
+                </div>
+            </div>
+            <div class="confirm-password-container">
+                <input type="password" placeholder="Confirm Password" id="signup-confirm-password" required>
+                <div class="invalid-feedback" id="invalid-confirm-password">
+                    Please provide a valid password.
+                </div>
+            </div>
+            <div class="email-container">
+                <input type="email" placeholder="Email" id="signup-email" required>
+                <div class="invalid-feedback">
+                    Please provide a valid email.
+                </div>
+            </div>
+            <button type="submit">Signup</button>
+        </form>
+        <p>Already have an account? <a href="../Login/login.html">Login</a></p>
+    </div>
+    <script type="module" src="./script.ts"></script>
+</body>
+
+</html>

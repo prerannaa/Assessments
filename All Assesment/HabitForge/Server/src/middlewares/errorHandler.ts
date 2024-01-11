@@ -6,6 +6,8 @@ import UnauthenticatedError from "../errors/UnauthenticatedError";
 import loggerWithNameSpace from "../utils/logger";
 import NotFoundError from "../errors/NotFoundError";
 import NotAcceptableError from "../errors/NotAcceptableError";
+
+
 const logger = loggerWithNameSpace("ErrorHandler");
 
 /**

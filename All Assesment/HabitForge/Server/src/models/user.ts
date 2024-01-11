@@ -1,5 +1,5 @@
-import sequelize from '../database/connection'; 
 import { Table, Column, Model, DataType, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+
 
 @Table({
     timestamps: true,
@@ -35,12 +35,17 @@ class User extends Model {
     })
     declare email: string;
 
+    // @Column({
+    //     type:DataType.STRING,
+    //     allowNull: false
+    // })
+    // declare profileImageUrl: string;
+
     @CreatedAt
     declare created_at: Date;
 
     @UpdatedAt
     declare updated_at: Date;
 }
-
 
 export default User;
