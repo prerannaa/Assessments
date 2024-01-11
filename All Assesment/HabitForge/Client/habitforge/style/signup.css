@@ -59,13 +59,21 @@ button {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 0 auto; /* Center the image */
+    margin: 0 auto;
+    /* Center the image */
 }
 
 
-.invalid-feedback{
+.invalid-feedback {
     color: red;
     font-size: 10px;
-    display: none;
+    margin-top: 5px;
+    /* Adjust as needed for spacing */
+
 }
 
+
+.is-invalid {
+    border: 1px solid red;
+    /* Red border for invalid input */
+}

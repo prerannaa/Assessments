@@ -1,7 +1,7 @@
 import { makeRequest } from "../../axios/axios";
 import { ISignupData } from "../../interface/formInterface";
 import { AxiosError } from "axios";
-// import { registrationSchema } from "../../schema/validation";
+import { registrationSchema } from "../../schema/validation";
 import * as yup from "yup";
 import { showToastMessage } from "../../utils/tostifyNotification";
 
@@ -23,15 +23,56 @@ const confirmPasswordError = document.getElementById(
   "invalid-confirm-password"
 ) as HTMLDivElement;
 
+
+const clearValidationErrors = () => {
+  const errorElements = document.querySelectorAll(".is-invalid");
+  errorElements.forEach((element) => {
+    element.classList.remove("is-invalid");
+  });
+};
+
+const validatePasswordMatch = (data: ISignupData) => {
+  if (data.password !== data.confirmPassword) {
+    console.log("Password does not match");
+    confirmPasswordInput.classList.add("is-invalid");
+    showToastMessage("error", "Password does not match")
+    // confirmPasswordError.innerHTML = "Passwords do not match";
+    return false;
+  }
+  return true;
+};
+
+//   clearValidationErrors();
+//   try {
+//     await registrationSchema.validate(data, { abortEarly: false });
+//     if (!validatePasswordMatch(data)) {
+//       return false;
+//     }
+//     return true;
+//   } catch (error: any) {
+//     // Yup validation error handling
+//     error.inner.forEach((err: yup.ValidationError) => {
+//       const inputElement = document.getElementById(
+//         `signup-${err.path}`
+//       ) as HTMLInputElement;
+//       if (inputElement) {
+//         inputElement.classList.add("is-invalid");
+//         const feedbackElement = inputElement.nextElementSibling as HTMLElement;
+//         feedbackElement.innerHTML = err.message;
+//       }
+//     });
+//     return false;
+//   }
+// };
+
 const validateInput = async (data: ISignupData) => {
+  clearValidationErrors();
+
   try {
-    // await registrationSchema.validate(data, { abortEarly: false });
-    // if (data.password !== data.confirmPassword) {
-    //   console.log("Password does not match");
-    //   confirmPasswordInput.classList.add("is-invalid");
-    //   confirmPasswordError.innerHTML = "Passwords do not match";
-    //   return false;
-    // }
+    await registrationSchema.validate(data, { abortEarly: false });
+    if (!validatePasswordMatch(data)) {
+      return false;
+    }
     return true;
   } catch (error: any) {
     // Yup validation error handling
@@ -39,25 +80,38 @@ const validateInput = async (data: ISignupData) => {
       const inputElement = document.getElementById(
         `signup-${err.path}`
       ) as HTMLInputElement;
+
       if (inputElement) {
-        inputElement.classList.add("is-invalid");
-        const feedbackElement = inputElement.nextElementSibling as HTMLElement;
-        feedbackElement.innerHTML = err.message;
+        const feedbackElement = inputElement.nextElementSibling as HTMLElement | null;
+
+        // Check if feedbackElement is not null before setting innerHTML
+        if (feedbackElement) {
+          inputElement.classList.add("is-invalid");
+          feedbackElement.innerHTML = err.message;
+        }
       }
     });
     return false;
   }
 };
 
+registerForm.addEventListener("input", (event) => {
+  const inputElement = event.target as HTMLInputElement;
+  const feedbackElement = inputElement.nextElementSibling as HTMLElement;
+
+  // Clear previous validation styles
+  inputElement.classList.remove("is-invalid");
+  feedbackElement.innerHTML = "";
+
+  // Validate if the input is empty
+  if (!inputElement.value.trim()) {
+    inputElement.classList.add("is-invalid");
+    feedbackElement.innerHTML = "This field is required.";
+  }
+});
+
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Reset validation styles
-  usernameInput.classList.remove("is-invalid");
-  emailInput.classList.remove("is-invalid");
-  passwordInput.classList.remove("is-invalid");
-  confirmPasswordInput.classList.remove("is-invalid");
-  confirmPasswordError.innerHTML = "";
 
   const username = usernameInput.value.trim();
   const email = emailInput.value.trim();
