@@ -1,8 +1,9 @@
 import { makeRequest } from "../../axios/axios";
 import { ISignupData } from "../../interface/formInterface";
 import { AxiosError } from "axios";
-import { registrationSchema } from "../../schema/validation";
+// import { registrationSchema } from "../../schema/validation";
 import * as yup from "yup";
+import { showToastMessage } from "../../utils/tostifyNotification";
 
 const registerForm = document.getElementById(
   "registration-form"
@@ -74,6 +75,7 @@ registerForm.addEventListener("submit", async (e) => {
     const { confirmPassword, ...userWithoutConfirmPassword } = user;
     await register(userWithoutConfirmPassword);
   }
+  return;
 });
 
 const register = async (user: {
@@ -83,14 +85,21 @@ const register = async (user: {
 }) => {
   try {
     const response = await makeRequest.post("/auth/register", user);
-    console.log("Signup success", response.data.status);
-    if (response.data.status === 200) {
-      window.location.href = "../Login/";
+    console.log("Signup success", response.status);
+    if (response.status === 200) {
+      showToastMessage("success", "Signup success");
+      // Wait for 2 seconds before redirecting to login
+      setTimeout(() => {
+        window.location.href = "../Login/login.html";
+      }, 2000);
+    } else {
+      showToastMessage("error", "Signup failed");
     }
   } catch (error) {
-    console.log({ error });
+    // console.log({ error });
     if (error instanceof AxiosError) {
       // Handle Axios error
+      showToastMessage("error", "An error occurred while signing up");
     }
   }
 };
