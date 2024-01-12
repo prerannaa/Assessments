@@ -1,6 +1,6 @@
 import { makeRequest } from "../../axios/axios";
 import { ISignupData } from "../../interface/formInterface";
-import { AxiosError } from "axios";
+import { IHTTPError } from "../../interface/errorInterface";
 import { registrationSchema } from "../../schema/validation";
 import * as yup from "yup";
 import { showToastMessage } from "../../utils/tostifyNotification";
@@ -31,50 +31,19 @@ const clearValidationErrors = () => {
   });
 };
 
-const validatePasswordMatch = (data: ISignupData) => {
-  if (data.password !== data.confirmPassword) {
-    console.log("Password does not match");
-    confirmPasswordInput.classList.add("is-invalid");
-    showToastMessage("error", "Password does not match")
-    // confirmPasswordError.innerHTML = "Passwords do not match";
-    return false;
-  }
-  return true;
-};
-
-//   clearValidationErrors();
-//   try {
-//     await registrationSchema.validate(data, { abortEarly: false });
-//     if (!validatePasswordMatch(data)) {
-//       return false;
-//     }
-//     return true;
-//   } catch (error: any) {
-//     // Yup validation error handling
-//     error.inner.forEach((err: yup.ValidationError) => {
-//       const inputElement = document.getElementById(
-//         `signup-${err.path}`
-//       ) as HTMLInputElement;
-//       if (inputElement) {
-//         inputElement.classList.add("is-invalid");
-//         const feedbackElement = inputElement.nextElementSibling as HTMLElement;
-//         feedbackElement.innerHTML = err.message;
-//       }
-//     });
-//     return false;
-//   }
-// };
-
 const validateInput = async (data: ISignupData) => {
   clearValidationErrors();
 
   try {
     await registrationSchema.validate(data, { abortEarly: false });
-    if (!validatePasswordMatch(data)) {
-      return false;
+    if (data.password !== data.confirmPassword) {
+      console.log("Password does not match");
+      confirmPasswordInput.classList.add("is-invalid");
+      confirmPasswordError.innerHTML = "Passwords do not match";
     }
     return true;
-  } catch (error: any) {
+    }
+   catch (error: any) {
     // Yup validation error handling
     error.inner.forEach((err: yup.ValidationError) => {
       const inputElement = document.getElementById(
@@ -83,7 +52,6 @@ const validateInput = async (data: ISignupData) => {
 
       if (inputElement) {
         const feedbackElement = inputElement.nextElementSibling as HTMLElement | null;
-
         // Check if feedbackElement is not null before setting innerHTML
         if (feedbackElement) {
           inputElement.classList.add("is-invalid");
@@ -145,15 +113,16 @@ const register = async (user: {
       // Wait for 2 seconds before redirecting to login
       setTimeout(() => {
         window.location.href = "../Login/login.html";
-      }, 2000);
+      }, 1000);
     } else {
       showToastMessage("error", "Signup failed");
     }
   } catch (error) {
-    // console.log({ error });
-    if (error instanceof AxiosError) {
-      // Handle Axios error
-      showToastMessage("error", "An error occurred while signing up");
-    }
+    const errorMessage =
+    typeof error === "object" && error !== null
+      ? (error as IHTTPError)?.response?.data?.message
+      : "";
+
+  showToastMessage("failed", errorMessage as string);
   }
 };

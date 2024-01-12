@@ -12,15 +12,23 @@
   <div id="app">
     <div class="container">
       <h2>Login</h2>
-      <form>
-        <input type="text" placeholder="Username" id="loginUsername" required>
-        <input type="password" placeholder="Password" id="loginPassword" required>
-        <button type="button" onclick="">Login</button>
+      <form id="login-form">
+        <div class="username-container">
+          <input type="text" placeholder="Username" id="login-username" required>
+          <div class="invalid-feedback">
+          </div>
+        </div>
+        <div class="password-container">
+          <input type="password" placeholder="Password" id="login-password" required>
+          <div class="invalid-feedback">
+          </div>
+        </div>
+        <button type="submit" >Login</button>
       </form>
       <p>Don't have an account? <a href="../Signup/signup.html">Signup</a></p>
     </div>
   </div>
-  <script type="module" src="/src/main.ts"></script>
+  <script type="module" src="./script.ts"></script>
 </body>
 
 </html>
