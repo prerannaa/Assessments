@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../style/styles.css">
+</head>
+
+<body>
+  <header>
+    <div class="navbar">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <div>
+            <a class="navbar-brand" href="#">HabitForge</a>
+            <!-- <img src="../../assets/logo.png" alt="" width="100px" height="100px" id="logo"> -->
+          </div>
+          <button class="logout_btn btn-outline-success" type="submit">Logout</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Button trigger modal -->
+    <div class="add-search-container">
+      <div class="search-container">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn-search" type="submit">Search</button>
+        </form>
+      </div>
+      <div id="cust_btn">
+        <button type="button" class="cust_btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add Habit
+        </button>
+      </div>
+    </div>
+    <main class="habit-container">
+      <!-- Modal -->
+      <div id="myModal" role="dialog">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create Habit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Add your input fields and other content here -->
+                <div class="habit-title-container">
+                  <input type="text" id="habitTitle" name="habitTitle" class="form-control" placeholder="Title...">
+                </div>
+                <div class="habit-notes-container">
+                  <textarea id="habitNotes" name="habitNotes" class="form-control" placeholder="Add Notes..."></textarea>
+                </div>
+                <div class="habit-difficulty-container">
+                  <label for="habitDifficulty">Difficulty</label>
+                  <div id="diff-btn" class="d-flex flex-wrap gap-1">
+                    <button type="button" class="btn-easy">Easy</button>
+                    <button type="button" class="btn-medium">Medium</button>
+                    <button type="button" class="btn-difficult">Difficult</button>
+                  </div>
+                </div>
+
+                <!-- Schedule -->
+
+                <div class="habit-scheduling-container">
+                  <label for="habitSchedule">Schedule</label>
+                  <div id="schedule-repeats">
+                    <div class="schedule-date">
+                      <div class="container">
+                        <div class="row">
+                                <label for="startDate">Start</label>
+                                <input id="startDate" class="form-control" type="date" />
+                                <span id="startDateSelected"></span>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="dropdown">
+                      <div class="d-flex flex-wrap gap-4">
+                        <!-- Repeats button -->
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Repeats
+                        </button>
+                    
+                        <!-- Interval input -->
+                        <input type="text" id="schedule-interval" class="form-control" placeholder="Interval...">
+                      </div>
+                    
+                      <!-- Dropdown menu -->
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Daily</a>
+                        <a class="dropdown-item" href="#">Weekly</a>
+                        <a class="dropdown-item" href="#">Monthly</a>
+                        <a class="dropdown-item" href="#">Yearly</a>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+
+                <!-- Reminders -->
+
+                <div class="habit-reminder-container">
+                  <label for="habitReminder">Reminder</label>
+                  <div class="cs-form">
+                    <input type="time" class="form-control" value="10:05 AM" />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+
+    <main class="todo-container"></main>
+    <div class="content-container"></div>
+  </main>
+  <script type="module" src="./dashboard.ts"></script>
+</body>
+
+</html>

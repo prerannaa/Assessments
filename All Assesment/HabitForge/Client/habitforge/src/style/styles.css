@@ -1,0 +1,128 @@
+@import url("normalize.css");
+@import url("bootstrap/dist/css/bootstrap.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Public+Sans:wght@100;200;300;400;500;600;700&display=swap");
+
+.navbar {
+    width: 100%;
+    background-color: #9381FF;
+
+}
+
+.navbar-brand {
+    margin-left: 50px;
+    color: #FFEEDD;
+    font-weight: 800;
+    font-size: 40px;
+}
+
+
+.navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    background-color: #9381FF;
+}
+
+.navbar button.btn-outline-success {
+    margin-right: 50px;
+}
+
+.main-container {
+    margin: 50px 50px;
+}
+
+.add-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px; /* Adjust margin as needed */
+  }
+
+  .search-container {
+    width: 500px; /* Set the width of the search bar */
+    margin-left: 400px; /* Adjust right margin as needed to create space */
+  }
+
+  #cust_btn {
+    margin-left: 10px; /* Adjust left margin as needed to create space */
+  }
+
+  .content-container{
+    background-color: #FFEEDD;
+    margin: 50px 0px;
+    width: 100%;
+    height: 500px;
+
+  }
+
+  .logout_btn{
+    background-color: #FFEEDD;
+    color: #9381FF;
+    border: none;
+    width: 100px;
+    height: 50px;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+  }
+
+  .logout_btn:hover {
+    background-color: #B8B8FF; /* Change background color on hover */
+    color: #FFEEDD; /* Change text color on hover */
+  }
+
+  .btn-search,
+  .cust_btn,
+  .btn-easy,
+  .btn-medium,
+  .btn-difficult{
+    background-color: #9381FF;
+    color: #FFEEDD;
+    width: 100px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
+  }
+.cust_btn:hover {
+    background-color: #FFEEDD; /* Change background color on hover */
+    color: #B8B8FF; /* Change text color on hover */
+  }
+  .btn-search:hover {
+    background-color: #FFEEDD; /* Change background color on hover */
+    color: #B8B8FF; /* Change text color on hover */
+  }
+
+  .modal-body {
+    padding: 20px; /* Add padding to the modal body */
+  }
+  
+  .habit-title-container,
+  .habit-notes-container,
+  .habit-difficulty-container,
+  .habit-scheduling-container,
+  .habit-reminder-container {
+    margin-bottom: 15px; /* Add bottom margin for spacing between containers */
+  }
+
+  #diff-btn{
+    margin: 10px;
+  }
+
+#schedule-interval{
+   width:100px;
+}
+
+.schedule-date{
+    margin: 20px 0px;
+}
+
+.modal-header{
+    background-color: #9381FF;
+    color: #FFEEDD;
+    font-weight: 500px;
+}
+
+.modal-content{
+    background-color: #F8F7FF;
+    color: 	#323232;
+    font-weight: 300px;
+}
