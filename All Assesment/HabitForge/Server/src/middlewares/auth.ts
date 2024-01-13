@@ -28,11 +28,6 @@ export const verifyAuth = async (
           throw new NotAcceptableError("Invalid token payload");
         }
 
-        // const tokenBlackListed = await accessBlacklisted(accessToken);
-        // if (tokenBlackListed) {
-        //   throw new NotAcceptableError("Token is not valid");
-        // }
-
         res.locals.user = userInfo;
         return next();
       }

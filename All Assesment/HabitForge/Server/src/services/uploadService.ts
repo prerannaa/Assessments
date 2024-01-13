@@ -1,5 +1,5 @@
 import User from "../models/user";
-import { IUploadFileInput } from "../interfaces/uploadFileInterface";
+// import { IUploadFileInput } from "../interfaces/uploadFileInterface";
 
 export const UploadImage = async ({ image_url }: IUploadFileInput): Promise<any> => {
     try {

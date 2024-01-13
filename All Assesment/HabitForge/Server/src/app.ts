@@ -13,7 +13,7 @@ const serverPort = process.env.SERVER_PORT || 8000;
 
 const app = express();
 
-  app.use(express.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
@@ -22,7 +22,6 @@ app.use(
   })
 );
 app.use("/api", router);
-
 app.use(genericErrorHandler);
 app.use(notFoundError);
 
