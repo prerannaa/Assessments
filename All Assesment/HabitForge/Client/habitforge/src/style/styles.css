@@ -90,6 +90,18 @@
     background-color: #FFEEDD; /* Change background color on hover */
     color: #B8B8FF; /* Change text color on hover */
   }
+  .btn-easy:hover {
+    background-color: #FFEEDD; /* Change background color on hover */
+    color: #B8B8FF; /* Change text color on hover */
+  }
+  .btn-medium:hover {
+    background-color: #FFEEDD; /* Change background color on hover */
+    color: #B8B8FF; /* Change text color on hover */
+  }
+  .btn-difficult:hover {
+    background-color: #FFEEDD; /* Change background color on hover */
+    color: #B8B8FF; /* Change text color on hover */
+  }
 
   .modal-body {
     padding: 20px; /* Add padding to the modal body */
@@ -125,4 +137,10 @@
     background-color: #F8F7FF;
     color: 	#323232;
     font-weight: 300px;
+}
+
+.dropdown-interval{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
