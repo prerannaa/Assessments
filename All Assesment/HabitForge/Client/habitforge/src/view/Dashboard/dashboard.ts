@@ -1,3 +1,7 @@
+import * as bootstrap from "bootstrap";
+
+window.bootstrap = bootstrap;
+
 document.addEventListener("DOMContentLoaded", function () {
   const saveButton = document.querySelector(".modal-footer .btn-secondary");
   const diffButtons = document.querySelectorAll(".diff-btn button");
@@ -51,12 +55,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Create a new list item
     const li = document.createElement("li");
     li.innerHTML = `<strong>${habitTitleInput.value}</strong> -<br> ${habitNotesInput.value}`;
+    let span = document.createElement("span");
+    span.innerHTML = "x";
+    li.appendChild(span);
 
     // Append the list item to the list container
     listContainer?.appendChild(li);
     listContainer.addEventListener("click", (e: MouseEvent) => {
       if ((e.target as HTMLElement).tagName === "LI") {
         (e.target as HTMLElement).classList.toggle("checked");
+        saveData();
+      }
+      else if((e.target as HTMLElement).tagName == "SPAN"){
+        (e.target as HTMLElement).parentElement?.remove();
         saveData();
       }
     });
