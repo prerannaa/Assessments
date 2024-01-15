@@ -59,7 +59,7 @@ export const userLogin = async (
   username: string,
   password: string,
 ): Promise<ILoginMessageResponse> => {
-  const user = await User.findOne({ where: { username:username } });
+  const user = await User.findOne({ where: { username:username} });
 
   if (!user) throw new NotFoundError("Invalid Username!");
   const passwordMatch = bcrypt.compareSync(password, user.password);
@@ -67,7 +67,7 @@ export const userLogin = async (
 
   const accessToken = jwt.sign(
     { userId: user.id },
-    process.env.JWT_SECRET as string,
+    process.env.JWT_SECRET || 'mySecrectKey',
     {
       expiresIn: ACCESS_TOKEN_EXPIRY,
     }
@@ -75,7 +75,7 @@ export const userLogin = async (
 
   const refreshToken = jwt.sign(
     { userId: user.id },
-    process.env.JWT_SECRET as string,
+    process.env.JWT_SECRET || 'mySecrectKey',
     {
       expiresIn: REFRESH_TOKEN_EXPIRY,
     }
@@ -90,3 +90,15 @@ export const userLogin = async (
     },
   };
 };
+
+// export const logout = async (
+//   accessToken: string,
+//   refreshToken: string
+// ): Promise<IMessageResponse> => {
+//   await TokenBlockModel.create({
+//     access_token: accessToken,
+//     refresh_token: refreshToken,
+//   });
+//   return { message: "User logged out successfully. 🎉", status: 200 };
+// };
+

@@ -107,7 +107,6 @@ const register = async (user: {
 }) => {
   try {
     const response = await makeRequest.post("/auth/register", user);
-    console.log("Signup success", response.status);
     if (response.status === 200) {
       showToastMessage("success", "Signup success");
       // Wait for 2 seconds before redirecting to login

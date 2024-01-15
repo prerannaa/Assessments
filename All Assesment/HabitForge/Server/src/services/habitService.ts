@@ -1,26 +1,23 @@
 import Habit from "../models/habit";
+import User from "../models/user";
 import BadRequestError from "../errors/BadRequestError";
-import { IHabit } from "../interfaces/habitInterface";
 import {
     IMessageResponse,
   } from "../interfaces/responseInterface";
 
 export const createHabit = async (
+  // userId: string,
+  habitId: string,
   title: string,
   notes: string,
-  difficulty: string,
-  startdate: string,
-  reminderinterval: number
 ): Promise<IMessageResponse> => {
   try {
     const newHabit = await Habit.create({
-      title,
-      notes,
-      difficulty,
-      startDate: startdate,
-      reminderinterval,
-    });
-    await newHabit.save();
+      // userId: userId,
+      habitId: habitId,
+      title: title,
+      notes: notes
+        });
 
     return {
         message: "Habit Created!",

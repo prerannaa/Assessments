@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { IHabit } from "../interfaces/habitInterface";
 import { createHabit } from "../services/habitService";
+import BadRequestError from "../errors/BadRequestError";
+import { IMessageResponse } from "../interfaces/responseInterface";
 
 
 /**
@@ -13,17 +15,20 @@ import { createHabit } from "../services/habitService";
  */
 
 export const handleNewHabit = async (
-  req: IHabit,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { title, notes, difficulty, startdate, reminderinterval} = req.body;
-    const habit = await createHabit( title, notes, difficulty, startdate, reminderinterval);
-    res.status(201).json(habit);
+    const {habitId, title, notes} = req.query;
+    // const userId = res.locals.user.userId;
+
+    const data: IMessageResponse = await createHabit(habitId as string, title as string, notes as string);
+    res.status(data.status).json(data.message);
+    res.status(data.status).json(data.message);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
-    next(error)
+    // next(error)
   }
 };

@@ -32,6 +32,30 @@ export function notFoundError(_req: Request, res: Response) {
  * @param res - The Express response object to send the error response.
  * @param _next - The Express next function
  */
+// export function genericErrorHandler(
+//   err: Error,
+//   _req: Request,
+//   res: Response,
+//   _next: NextFunction // eslint-disable-line
+// ) {
+//   if (err.stack) {
+//     logger.error(err.stack);
+//   }
+
+//   if (err instanceof UnauthenticatedError) {
+//     return res.status(HttpStatus.UNAUTHORIZED).json({ message: err.message });
+//   }
+//   if (err instanceof NotFoundError) {
+//     return res.status(HttpStatus.NOT_FOUND).json({ message: err.message });
+//   }
+//   if (err instanceof NotAcceptableError) {
+//     return res.status(HttpStatus.NOT_ACCEPTABLE).json({ message: err.message });
+//   }
+//   return res
+//     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//     .json({ message: err.message });
+// }
+
 export function genericErrorHandler(
   err: Error,
   _req: Request,
@@ -51,7 +75,5 @@ export function genericErrorHandler(
   if (err instanceof NotAcceptableError) {
     return res.status(HttpStatus.NOT_ACCEPTABLE).json({ message: err.message });
   }
-  return res
-    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-    .json({ message: err.message });
+  res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: err.message });
 }

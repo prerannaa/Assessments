@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { IUserLogin, IUserRegister } from '../interfaces/authInterface';
 import { userRegister, userLogin } from '../services/AuthService';
-import { UploadImage } from '../services/uploadService';
+import { error } from 'console';
 
 /**
  * Handles the registration of a new user.
@@ -19,7 +19,6 @@ export const handleUserRegistration = async(
     const data = await userRegister( username, password, email);
     res.status(data.status).json(data.message);
   } catch(error){
-    next(error)
   }
 };
 
@@ -43,9 +42,30 @@ export const handleUserLogin = async(
       .status(data.status)
       .json(data.message)
       .cookie("accessToken", data.data.accessToken)
-      .cookie("refreshToken", data.data.refreshToken);
+      .cookie("refreshToken", data.data.refreshToken)
+      // .json(data.message);
+}catch(error){
+}};
 
-  } catch(error){
-    next(error)
-  }
-};
+// export const handleUserLogout = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const { accessToken, refreshToken } = req.cookies;
+//     const data = await logout(accessToken, refreshToken);
+//     res.clearCookie("accessToken", {
+//       secure: true,
+//       sameSite: "none",
+//     });
+//     res.clearCookie("refreshToken", {
+//       secure: true,
+//       sameSite: "none",
+//     });
+//     res.status(data.status).json(data.message);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+

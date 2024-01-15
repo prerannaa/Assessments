@@ -12,10 +12,11 @@ export const verifyAuth = async (
 ) => {
   try {
     const { accessToken } = req.cookies;
+    console.log(accessToken);
+    console.log("Our access token", req.cookies)
     if (!accessToken) {
       throw new UnauthenticatedError("Token not provided.");
     }
-
     jwt.verify(
       accessToken,
       process.env.JWT_SECRET as string,
@@ -29,10 +30,10 @@ export const verifyAuth = async (
         }
 
         res.locals.user = userInfo;
+
         return next();
       }
     );
   } catch (error) {
-    next(error);
   }
 };

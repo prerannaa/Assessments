@@ -1,133 +1,167 @@
-import * as bootstrap from "bootstrap";
-
-window.bootstrap = bootstrap;
-
-document.addEventListener("click", (event: Event) => {
-  const target = event.target as HTMLElement;
-
-  if (target && target.id === "cust_btn") {
-    const myModal = document.getElementById("myModal");
-
-    if (myModal) {
-      const bootstrapModal = new bootstrap.Modal(myModal);
-      bootstrapModal.toggle();
-    }
-  }
-});
-
-const startDateElement: HTMLInputElement | null = document.getElementById(
-  "startDate"
-) as HTMLInputElement;
-const startDateSelectedElement: HTMLElement | null =
-  document.getElementById("startDateSelected");
-
-if (startDateElement && startDateSelectedElement) {
-  startDateElement.addEventListener("change", (event: Event) => {
-    const startDateVal: string = (event.target as HTMLInputElement).value;
-  });
-}
-
-/**
- * Adds a click event listener to the "Save" button in the habit creation modal.
- * Retrieves values from various input fields in the modal, such as habit title, notes, start date, interval, etc.
- * Logs the retrieved values to the console. You can customize this part based on your needs.
- *
- */
 document.addEventListener("DOMContentLoaded", function () {
-  // Get the "Save" button in the modal
   const saveButton = document.querySelector(".modal-footer .btn-secondary");
   const diffButtons = document.querySelectorAll(".diff-btn button");
   const selectDropdown = document.getElementById(
     "select-drpdwn"
   ) as HTMLSelectElement;
+  const listContainer = document.getElementById(
+    "list-container"
+  ) as HTMLElement;
 
-  let selectedDifficulty: string = ""; // Variable to store the selected difficulty
-  let selectedRepeats: string = ""; // Variable to store the selected repeats value
+  let selectedDifficulty: string = "";
+  let selectedRepeats: string = "";
 
-  // Add click event listeners to each difficulty button
   diffButtons.forEach((button) => {
     button.addEventListener("click", function () {
       selectedDifficulty = button.getAttribute("value") || "";
 
-      // Remove 'selected' class from all buttons
       diffButtons.forEach((btn) => {
         btn.classList.remove("selected");
-        (btn as HTMLButtonElement).style.backgroundColor = ""; // Reset background color
-        (btn as HTMLButtonElement).style.color = ""; // Reset text color
+        (btn as HTMLButtonElement).style.backgroundColor = "";
+        (btn as HTMLButtonElement).style.color = "";
       });
 
-      // Add 'selected' class to the clicked button
       button.classList.add("selected");
       (button as HTMLButtonElement).style.backgroundColor = "#FFEEDD";
       (button as HTMLButtonElement).style.color = "#B8B8FF";
     });
   });
 
-  // Add change event listener to the dropdown
   selectDropdown.addEventListener("change", function () {
     selectedRepeats = selectDropdown.value;
-    // console.log('Selected Repeats:', selectedRepeats);
   });
 
-  // Add a click event listener to the "Save" button
   saveButton?.addEventListener("click", function () {
-    // Retrieve values from the input fields
-    const habitTitle = (
-      document.getElementById("habitTitle") as HTMLInputElement
-    )?.value;
-    const habitNotes = (
-      document.getElementById("habitNotes") as HTMLTextAreaElement
-    )?.value;
-    const startDate = (document.getElementById("startDate") as HTMLInputElement)
-      ?.value;
-    const interval = (
-      document.getElementById("schedule-interval") as HTMLInputElement
-    )?.value;
+    const habitTitleInput = document.getElementById(
+      "habitTitle"
+    ) as HTMLInputElement;
+    const habitNotesInput = document.getElementById(
+      "habitNotes"
+    ) as HTMLTextAreaElement;
+    const startDateInput = document.getElementById(
+      "startDate"
+    ) as HTMLInputElement;
+    const intervalInput = document.getElementById(
+      "schedule-interval"
+    ) as HTMLInputElement;
+    const reminderTimeInput = document.querySelector(
+      ".habit-reminder-container input[type='time']"
+    ) as HTMLInputElement;
 
-    // Get the selected reminder time
-    const reminderTime = (
-      document.querySelector(
-        ".habit-reminder-container input[type='time']"
-      ) as HTMLInputElement
-    )?.value;
+    // Create a new list item
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${habitTitleInput.value}</strong> -<br> ${habitNotesInput.value}`;
 
-    // Now you can use or store these values as needed
-    console.log("Habit Title:", habitTitle);
-    console.log("Habit Notes:", habitNotes);
-    console.log("Start Date:", startDate);
-    console.log("Selected Difficulty:", selectedDifficulty);
-    console.log("Selected Repeats:", selectedRepeats);
-    console.log("Interval:", interval);
-    console.log("Reminder Time:", reminderTime);
-  });
+    // Append the list item to the list container
+    listContainer?.appendChild(li);
+    listContainer.addEventListener("click", (e: MouseEvent) => {
+      if ((e.target as HTMLElement).tagName === "LI") {
+        (e.target as HTMLElement).classList.toggle("checked");
+        saveData();
+      }
+    });
 
-  //Reset values of the modal
-  saveButton?.addEventListener("click", function () {
-    // Retrieve values from the input fields
-    const habitTitleInput = document.getElementById("habitTitle") as HTMLInputElement;
-    const habitNotesInput = document.getElementById("habitNotes") as HTMLTextAreaElement;
-    const startDateInput = document.getElementById("startDate") as HTMLInputElement;
-    const intervalInput = document.getElementById("schedule-interval") as HTMLInputElement;
+    // Save data to localStorage
+    saveData();
 
-    // Get the selected reminder time
-    const reminderTimeInput = document.querySelector(".habit-reminder-container input[type='time']") as HTMLInputElement;
-
-    // Clear values of the input fields
+    // Reset input values and selected variables
     habitTitleInput.value = "";
     habitNotesInput.value = "";
     startDateInput.value = "";
     intervalInput.value = "";
     reminderTimeInput.value = "";
-
-    // Reset the selectedDifficulty and selectedRepeats variables
     selectedDifficulty = "";
     selectedRepeats = "";
 
     // Remove 'selected' class and reset background color and text color for all buttons
     diffButtons.forEach((btn) => {
       btn.classList.remove("selected");
-      (btn as HTMLButtonElement).style.backgroundColor = ""; // Reset background color
-      (btn as HTMLButtonElement).style.color = ""; // Reset text color
+      (btn as HTMLButtonElement).style.backgroundColor = "";
+      (btn as HTMLButtonElement).style.color = "";
     });
   });
+
+  function saveData() {
+    if (listContainer) {
+      localStorage.setItem("habitData", listContainer.innerHTML);
+    }
+  }
+
+  function showData() {
+    const savedData = localStorage.getItem("habitData");
+    if (savedData && listContainer) {
+      listContainer.innerHTML = savedData;
+    }
+  }
+
+  // Add event listeners for filter options
+  const allLink = document.getElementById("content-all") as HTMLUListElement;
+  const completedLink = document.getElementById(
+    "content-completed"
+  ) as HTMLUListElement;
+  const remainingLink = document.getElementById(
+    "content-remaining"
+  ) as HTMLUListElement;
+
+  allLink.addEventListener("click", function () {
+    filterList("all");
+  });
+  completedLink.addEventListener("click", function () {
+    filterList("completed");
+  });
+
+  remainingLink.addEventListener("click", function () {
+    filterList("remaining");
+  });
+
+  /**
+   * Filter the habit list based on the selected filter type.
+   * @param filterType - The type of filter to apply ("all", "completed", or "remaining").
+   * @returns void
+   */
+
+  function filterList(filterType: string): void {
+    const listItems = listContainer?.getElementsByTagName("li") || [];
+
+    for (let i = 0; i < listItems.length; i++) {
+      const listItem = listItems[i];
+      const isChecked = listItem.classList.contains("checked");
+
+      switch (filterType) {
+        case "all":
+          listItem.style.display = "block";
+          break;
+        case "completed":
+          listItem.style.display = isChecked ? "block" : "none";
+          break;
+        case "remaining":
+          listItem.style.display = isChecked ? "none" : "block";
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  // Load saved data on page load
+  window.addEventListener("load", showData);
 });
+
+
+
+  // async function saveHabitData(habitData: any) {
+  //   try {
+  //     const response = await makeRequest.post("/dashboard/habits", habitData);
+  //     if (response.status === 200) {
+  //       console.log("Habit data successfully sent to the API");
+  //       showToastMessage("success", "Habit data successfully sent to the API")
+  //     } else {
+  //       console.error("Failed to send habit data to the API");
+  //       showToastMessage("error", "Failed to send habit data to the API");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending habit data to the API", error);
+  //     // Handle error as needed
+  //   }
+  // }
+ 

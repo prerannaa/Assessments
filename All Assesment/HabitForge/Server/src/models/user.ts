@@ -13,7 +13,7 @@ class User extends Model {
         type:DataType.UUID,
         defaultValue: DataType.UUIDV4,
     })
-    declare id: string;
+    declare userId: string;
 
     @Column({
         type:DataType.STRING(255),
@@ -34,12 +34,6 @@ class User extends Model {
         unique: true,
     })
     declare email: string;
-
-    // @Column({
-    //     type:DataType.STRING,
-    //     allowNull: false
-    // })
-    // declare profileImageUrl: string;
 
     @CreatedAt
     declare created_at: Date;

@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, CreatedAt, UpdatedAt, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, CreatedAt, UpdatedAt, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import User from './user';
 
 @Table({
@@ -13,44 +13,53 @@ class Habit extends Model {
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,
     })
-    declare id: string;
+    declare habitId: string;
 
     @Column({
         type:DataType.STRING(255),
-        allowNull: false,
     })
     declare title: string;
+
     @Column({
         type:DataType.TEXT,
     })
     declare notes: string
+
     @Column({
         type:DataType.ENUM('Easy','Medium', 'Difficult'),
         defaultValue: "Easy",
-        allowNull: false,
     })
     declare difficulty: string
+
     @Column({
-        type:DataType.DATE,
-        allowNull: true,
+        type:DataType.STRING(255),
     })
-    declare startDate: Date
+    declare startDate: string
+
     @Column({
         type:DataType.ENUM('Daily', 'Weekly', 'Monthly', 'Yearly'),
         defaultValue: "Daily",
-        allowNull: false,
     })
     declare repeatSchedule: string
+
     @Column({
         type:DataType.INTEGER,
-        allowNull:true
     })
     declare reminderInterval: string
+
     @Column({
-        type: DataType.TIME,
-        allowNull: true
+        type: DataType.STRING(255),
     })
     declare reminderTime: string;
+
+    // @ForeignKey(()=> User)
+    // @Column({
+    //     type: DataType.UUID,
+    // })
+    // declare userId: string;
+
+    // @BelongsTo(() => User)
+    // declare user: string;
 
     @CreatedAt
     declare created_at: Date;

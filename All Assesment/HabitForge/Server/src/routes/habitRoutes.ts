@@ -1,6 +1,6 @@
 import express from 'express';
 import { handleNewHabit } from '../controller/HabitController';
-import { validateHabitData } from '../middlewares/habbit';
+import { validateHabitData } from '../middlewares/habit';
 
 const router = express.Router();
 

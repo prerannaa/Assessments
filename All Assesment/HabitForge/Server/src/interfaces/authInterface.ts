@@ -4,4 +4,4 @@ export interface IUserRegister {
 
 export interface IUserLogin {
   body: { username: string; password: string };
-}
+}   
