@@ -1,7 +1,7 @@
 import path from "path";
 import { defineConfig } from "vite";
 export default defineConfig({
-  base: "./",
+  base: "/Habitforge",
   root: "./src",
   server: {
     port: 5173,

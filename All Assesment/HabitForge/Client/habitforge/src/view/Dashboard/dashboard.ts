@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let selectedDifficulty: string = "";
   let selectedRepeats: string = "";
+  console.log(selectedDifficulty, selectedRepeats)
 
   diffButtons.forEach((button) => {
     button.addEventListener("click", function () {
